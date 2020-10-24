@@ -6,7 +6,7 @@ import logging
 from multiprocessing import Pool
 from time import sleep, time
 from bs4 import BeautifulSoup
-from parse_func import parse, get_urls
+from parse_funcs import parse, get_urls
 
 
 LETTERS = [letter for letter in string.ascii_lowercase]
