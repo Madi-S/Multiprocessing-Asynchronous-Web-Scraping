@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
+# Logger configuration
 handler = logging.StreamHandler()
 handler.setLevel(logging.DEBUG)
 
@@ -15,13 +16,14 @@ scraped_count = 1
 
 
 
-
+# Function to collect (crawl) all pertinent URLs on the page
 def get_urls(html):
     soup = BeautifulSoup(html, 'lxml')
 
     return ['https://www.healthgrades.com' + li.a['href'] for li in soup.find_all('li', class_='link-column__list')]
 
 
+# Fucntion to parse given HTML/URL
 def parse(url, html=None):
     global scraped_count
 
@@ -105,12 +107,14 @@ def parse(url, html=None):
             'Awards': awards,
             'Biography': biography,
         }
-
+        
+        # Write scraped data to the .csv file
         with open('data.csv', 'a', newline='', encoding='utf-8') as f:
             csv_writer = csv.DictWriter(f, fieldnames=['Name', 'Gender', 'Age', 'Phone', 'Rating',
                                                        'Rating count', 'URL', 'Locations', 'Awards', 'Biography'], delimiter='\t')
             csv_writer.writerow(data)
-
+        
+        # Increment scraped_count
         scraped_count += 1
 
     except Exception as e:
