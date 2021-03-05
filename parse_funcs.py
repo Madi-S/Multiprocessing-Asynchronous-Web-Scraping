@@ -18,7 +18,7 @@ scraped_count = 1
 
 # Function to collect (crawl) all pertinent URLs on the page
 def get_urls(html):
-    soup = BeautifulSoup(html, 'lxml')
+    soup = BeautifulSoup(html, 'html.parser')
 
     return ['https://www.healthgrades.com' + li.a['href'] for li in soup.find_all('li', class_='link-column__list')]
 
